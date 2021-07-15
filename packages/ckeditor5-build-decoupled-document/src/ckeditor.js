@@ -41,10 +41,28 @@ import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
 import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformation';
 import CloudServices from '@ckeditor/ckeditor5-cloud-services/src/cloudservices';
 
-export default class DecoupledEditor extends DecoupledEditorBase {}
+// import Autosave from '@ckeditor/ckeditor5-autosave/src/autosave';
+
+import Code from '@ckeditor/ckeditor5-basic-styles/src/code';
+import Highlight from '@ckeditor/ckeditor5-highlight/src/highlight';
+// import HorizontalLine from '@ckeditor/ckeditor5-horizontal-line/src/horizontalline';
+import HtmlEmbed from '@ckeditor/ckeditor5-html-embed/src/htmlembed';
+import MathType from '@wiris/mathtype-ckeditor5';
+import PageBreak from '@ckeditor/ckeditor5-page-break/src/pagebreak';
+// import RemoveFormat from '@ckeditor/ckeditor5-remove-format/src/removeformat';
+import Subscript from '@ckeditor/ckeditor5-basic-styles/src/subscript';
+import Superscript from '@ckeditor/ckeditor5-basic-styles/src/superscript';
+import TableCellProperties from '@ckeditor/ckeditor5-table/src/tablecellproperties';
+import TableProperties from '@ckeditor/ckeditor5-table/src/tableproperties';
+import TodoList from '@ckeditor/ckeditor5-list/src/todolist';
+import TableClassesPlugin from 'ckeditor5-table-classes/src/tableclasses';
+
+import RepeaTableIcon from '../theme/icon/star.svg';
+
+export default class BPTemplatesEditor extends DecoupledEditorBase {}
 
 // Plugins to include in the build.
-DecoupledEditor.builtinPlugins = [
+BPTemplatesEditor.builtinPlugins = [
 	Essentials,
 	Alignment,
 	FontSize,
@@ -78,15 +96,47 @@ DecoupledEditor.builtinPlugins = [
 	PasteFromOffice,
 	Table,
 	TableToolbar,
-	TextTransformation
+	TextTransformation,
+	// Autosave,
+	Code,
+	Highlight,
+	HtmlEmbed,
+	// HorizontalLine,
+	ImageResize,
+	MathType,
+	PageBreak,
+	// RemoveFormat,
+	Subscript,
+	Superscript,
+	TableCellProperties,
+	TableProperties,
+	TodoList,
+	TableClassesPlugin
+];
+
+const customColorPalette = [
+	{ color: '#000000', label: 'Black' },
+	{ color: '#4d4d4d', label: 'Dim grey' },
+	{ color: '#999999', label: 'Grey' },
+	{ color: '#e6e6e6', label: 'Light grey' },
+	{ color: '#ffffff', label: 'White', hasBorder: !0 },
+	{ color: '#e64c4c', label: 'Red' },
+	{ color: '#e6994c', label: 'Orange' },
+	{ color: '#e6e64c', label: 'Yellow' },
+	{ color: '#99e64c', label: 'Light green' },
+	{ color: '#4ce64c', label: 'Green' },
+	{ color: '#4ce699', label: 'Aquamarine' },
+	{ color: '#4ce6e6', label: 'Turquoise' },
+	{ color: '#4c99e6', label: 'Light blue' },
+	{ color: '#4c4ce6', label: 'Blue' },
+	{ color: '#994ce6', label: 'Purple' }
 ];
 
 // Editor configuration.
-DecoupledEditor.defaultConfig = {
+BPTemplatesEditor.defaultConfig = {
 	toolbar: {
 		items: [
 			'heading',
-			'|',
 			'fontfamily',
 			'fontsize',
 			'fontColor',
@@ -96,43 +146,78 @@ DecoupledEditor.defaultConfig = {
 			'italic',
 			'underline',
 			'strikethrough',
-			'|',
 			'alignment',
-			'|',
 			'numberedList',
 			'bulletedList',
-			'|',
-			'outdent',
 			'indent',
+			'outdent',
+			'|',
+			'MathType',
+			'ChemType',
 			'|',
 			'link',
 			'blockquote',
 			'uploadImage',
 			'insertTable',
 			'mediaEmbed',
+			'htmlEmbed',
 			'|',
 			'undo',
 			'redo'
 		]
 	},
 	image: {
+		styles: [
+			'full',
+			'alignLeft',
+			'alignRight'
+		],
 		resizeUnit: 'px',
 		toolbar: [
 			'imageStyle:inline',
 			'imageStyle:wrapText',
 			'imageStyle:breakText',
+			'imageStyle:alignLeft',
+			'imageStyle:full',
+			'imageStyle:alignRight',
 			'|',
 			'toggleImageCaption',
 			'imageTextAlternative'
 		]
 	},
 	table: {
+		tableToolbar: [ 'tableclass-style1' ],
 		contentToolbar: [
 			'tableColumn',
 			'tableRow',
-			'mergeTableCells'
+			'mergeTableCells',
+			'tableProperties',
+			'tableCellProperties'
+		],
+		tableProperties: {
+			borderColors: customColorPalette,
+			backgroundColors: customColorPalette
+		},
+
+		// Set the palettes for table cells.
+		tableCellProperties: {
+			borderColors: customColorPalette,
+			backgroundColors: customColorPalette
+		}
+	},
+	TableClasses: {
+		items: [
+			{ id: 'style1', classes: '--BPTEMPLATES-REPEATABLE--', icon: RepeaTableIcon }
 		]
 	},
 	// This value must be kept in sync with the language defined in webpack.config.js.
-	language: 'en'
+	language: 'es',
+
+	fontBackgroundColor: {
+		colors: customColorPalette
+	},
+	fontColor: {
+		colors: customColorPalette
+	}
+
 };
